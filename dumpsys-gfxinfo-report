@@ -1,0 +1,86 @@
+ref: https://stackoverflow.com/questions/45236131/total-frames-and-janky-frames-in-dumpsys-gfxinfo-report
+
+Before use "dumpsys gfxinfo", you would use "adb shell dumpsys gfxinfo reset" to reset the framemetrics data in the system. Then do some operation on the screens you improved. Then use "dumpsys gfxinfo" .
+
+Total frames rendered: The number of frame rendered from "reset" to "dumpsys gfxinfo". Janky frames: is the number of the frames that takes long than 16 ms, not the number of dropped frames.
+
+The Janky Frame Rate is a very good data you can compare when improving the performance. In your case, you reduced the janky frame rate, 62.28% to 37.87%, which is very good.
+
+-------
+
+The adb shell dumpsys gfxinfo <PACKAGE_NAME> command gives aggregated statistics about frame rendering across the entire lifetime of the process.
+
+There are two things which should be keept in mind when interpreting the output:
+
+In the example you provided it is not clear for how long the two tests were executed, so it is useless for any interpretation. The gfxinfo output also provides time information uptime, realtime and stats since. To calculate the total time recored stats since - realtime or stats since - uptime needs to be calculated. realtime and uptime are most likely the same value (the difference bewteen the two is another topic)
+The total frames rendered increases only if there is anything to render. If gfxinfo is queried for a static user interface and no interactions or animations frames rendered is very very low. So the two outputs are only comparable if the same test was executed (exactly same ui interactions or animations).
+To answer your questions:
+
+What does decrease in "Total frames" count and "Janky Frames" count signify?
+
+Decrease in Total frames could be less interactions or less time of gfxinfo recording. Decrease of Janky frames is basically the same and also more frames could be rendered and not have been dropped. This interpretation makes only sense if the same tests were applied in the two examples.
+
+Is it good indicator of performance?
+
+A decrease in janky frames is a good indicator of performance if (and only if) the same test for comparing two different implementations (e.g. of an animation) leads to the decrease in the optimized version of the two implementations.
+
+-----------
+
+#
+Total frames rendered: 1542
+
+Janky frames: 584 (37.87%)
+
+90th percentile: 81ms
+
+95th percentile: 93ms
+
+99th percentile: 129ms
+
+Number Missed Vsync: 268
+
+Number High input latency: 61
+
+Number Slow UI thread: 471
+
+Number Slow bitmap uploads: 15
+
+Number Slow issue draw commands: 511
+
+Total ViewRootImpl: 1
+
+Total Views: 434
+
+Total DisplayList: 505.57 kB
+
+#
+Before Performance improvements
+
+#
+Total frames rendered: 5185
+
+Janky frames: 3229 (62.28%)
+
+90th percentile: 101ms
+
+95th percentile: 109ms
+
+99th percentile: 121ms
+
+Number Missed Vsync: 2487
+
+Number High input latency: 65
+
+Number Slow UI thread: 2088
+
+Number Slow bitmap uploads: 75
+
+Number Slow issue draw commands: 2967
+
+Total ViewRootImpl: 1
+
+Total Views: 435
+
+Total DisplayList: 506.74 kB
+
+#
