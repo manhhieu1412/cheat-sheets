@@ -1,5 +1,4 @@
 {
-"data":{
     "latestVersion": "1.2.3",
     "latestVersionCode": "39",
     "forceUpdate": 1,
@@ -7,8 +6,4 @@
     "releaseNotes": [
       "- Bug fixes"
     ]
-  },
-  "result":{
-    "code":"000000"
   }
-}
