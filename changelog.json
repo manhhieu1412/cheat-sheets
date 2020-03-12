@@ -1,7 +1,7 @@
 {
     "latestVersion": "1.2.4",
     "latestVersionCode": 40,
-    "forceUpdate": 0,
+    "forceUpdate": 1,
     "url": "https://play.google.com/store/apps/details?id=com.mv.app",
     "releaseNotes": [
       "- Bug fixes"
